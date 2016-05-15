@@ -6,6 +6,30 @@
 /// <reference path="../i18n/i18n.ts" />
 "use strict"
 
+interface QuizScopeVariables extends ng.IScope {
+  connected : boolean;
+  loggedIn : boolean;
+  loginUsername : string;
+  loginPassword : string;
+
+  error : boolean;
+  errorMessage : string;
+
+  publicClientUrl : string;
+  stats : {
+    connectedClients : number;
+    activePolls : number;
+  };
+
+  polls: PollExtended[];
+  activePoll : IPoll;
+  activeQuestion : IQuestionAdmin;
+
+  // translator functions
+  t : (key : string, context? : I18nContext) => string;
+  tp : (key : string, n : number, context? : I18nContext) => string;
+}
+
 class Quiz {
 
   private static socket : SocketIOClient.Socket;

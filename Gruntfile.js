@@ -123,7 +123,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-contrib-watch");
 
   grunt.registerTask("cleanup", () => {
-    //grunt.file.delete("release/");
+    grunt.file.delete("release/");
     grunt.log.ok("Deleted temporary release directory");
   });
 
