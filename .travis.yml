@@ -1,12 +1,17 @@
 language: node_js
 node_js:
-- node
+  - node
+sudo: false
 before_script:
-- npm install -g grunt
+  - npm install -g grunt
 script: grunt
 branches:
   only:
   - master
+before_deploy:
+  - git config --global user.email "buildbot@travis-ci.org"
+  - git config --global user.name "Travis CI"
+  - git tag -fa -m "$RELEASE_VERSION"
 deploy:
   skip_cleanup: true
   provider: releases
@@ -17,3 +22,4 @@ deploy:
     - realtimepolls-server.zip
   on:
     repo: g0ne/Realtime-Polls
+    tags: false

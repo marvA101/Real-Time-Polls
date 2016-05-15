@@ -2,12 +2,17 @@
   "name": "RealtimePolls",
   "version": "0.1.0",
   "description": "Realtime Polls project",
+  "homepage": "https://github.com/g0ne/Realtime-Polls/",
   "scripts": {
     "test": "echo \"No tests specified\" && exit 0",
     "grunt": "grunt"
   },
-  "author": "g0ne",
-  "license": "Apache License 2.0",
+  "author": "g0ne (https://github.com/g0ne)",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/g0ne/Realtime-Polls/"
+  },
   "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-contrib-clean": "^1.0.0",
