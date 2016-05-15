@@ -11,7 +11,7 @@ branches:
 before_deploy:
   - git config --global user.email "buildbot@travis-ci.org"
   - git config --global user.name "Travis CI"
-  - echo $RELEASE_VERSION
+  - export RELEASE_VERSION=$(cat VERSION)
   - git tag -fa -m "$RELEASE_VERSION"
   - git push -q --tags origin master
 deploy:
