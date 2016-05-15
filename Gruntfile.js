@@ -64,7 +64,7 @@ module.exports = function(grunt) {
     compress: {
       browser: {
         options: {
-          archive: "realtimepolls-release-v<%= package.version %>.zip",
+          archive: "realtimepolls-release.zip",
           mode: "zip"
         },
         files: [
@@ -84,7 +84,7 @@ module.exports = function(grunt) {
       },
       server: {
         options: {
-          archive: "realtimepolls-server-v<%= package.version %>.zip",
+          archive: "realtimepolls-server.zip",
           mode: "zip"
         },
         files: [
