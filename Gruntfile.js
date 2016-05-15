@@ -130,7 +130,10 @@ module.exports = function(grunt) {
 
   grunt.registerTask("default", "Assemble release-ready files into server and client ZIPs", () => {
     let version = grunt.config.get("package.version");
-    grunt.util.spawn("export RELEASE_VERSION=v" + version, (error) => grunt.log.writeln("Success: " + (error != null)));
+    let options = {
+      cmd: "export RELEASE_VERSION=v" + version
+    };
+    grunt.util.spawn(options, (error) => grunt.log.writeln("Success: " + (error != null)));
 
     grunt.file.mkdir("release");
     grunt.log.ok("Created temporary release directory");
