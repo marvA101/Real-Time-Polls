@@ -9,16 +9,12 @@ branches:
   only:
   - master
 before_deploy:
-  - export RELEASE_VERSION=$(cat VERSION)
-  - echo Version $RELEASE_VERSION
-  - eval $(ssh-agent -s)
-  - chmod 600 .travis/deploy_key.pem
-  - ssh-add .travis/deploy_key.pem
   - git config --global user.email "buildbot@travis-ci.org"
   - git config --global user.name "Travis CI"
+  - export RELEASE_VERSION=$(cat VERSION)
+  - echo Version $RELEASE_VERSION
   - git tag -fa -m $RELEASE_VERSION $RELEASE_VERSION
-  - git remote add deploy https://$GITHUB_USER@github.com/$GITHUB_USER/$GITHUB_REPO
-  - git push -qf --tags deploy master
+  - git push -qf --tags https://$GITHUB_USER:$GITHUB_API_KEY@github.com/$GITHUB_USER/$GITHUB_REPO master
 deploy:
   skip_cleanup: true
   provider: releases
