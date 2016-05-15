@@ -131,7 +131,8 @@ module.exports = function(grunt) {
   grunt.registerTask("default", "Assemble release-ready files into server and client ZIPs", () => {
     let version = grunt.config.get("package.version");
     let options = {
-      cmd: "export RELEASE_VERSION=v" + version
+      cmd: "export",
+      args: ["RELEASE_VERSION=v" + version]
     };
     grunt.util.spawn(options, (error, result) => grunt.log.writeln("Success: " + (error != null) + " result: " + result));
 
