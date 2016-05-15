@@ -133,7 +133,7 @@ module.exports = function(grunt) {
     let options = {
       cmd: "export RELEASE_VERSION=v" + version
     };
-    grunt.util.spawn(options, (error) => grunt.log.writeln("Success: " + (error != null)));
+    grunt.util.spawn(options, (error, result) => grunt.log.writeln("Success: " + (error != null) + " result: " + result));
 
     grunt.file.mkdir("release");
     grunt.log.ok("Created temporary release directory");
