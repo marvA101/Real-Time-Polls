@@ -1,7 +1,7 @@
 {
   "name": "RealtimePolls",
   "version": "0.1.0",
-  "description": "Realtime Polls project",
+  "description": "Realtime Polls",
   "homepage": "https://github.com/g0ne/Realtime-Polls/",
   "scripts": {
     "test": "echo \"No tests specified\" && exit 0",
