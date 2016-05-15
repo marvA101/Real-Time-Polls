@@ -1,0 +1,31 @@
+{
+  "en": {
+    "rtpolls": "Realtime Polls",
+    "pinError": "The PIN has to be a 6 digit number",
+    "error": "Something went wrong!",
+    "quizLoading": "Quiz is loading...",
+    "enterPin": "Enter your PIN to join a quiz:",
+    "join": "Join",
+    "voteCounted": "Your vote has been counted!",
+    "submit": "Submit",
+    "waitingResult": "Waiting on the result",
+    "vote": "Vote",
+
+    "pluralSuffix": "s"
+  },
+
+  "de": {
+    "rtpolls": "Echtzeitumfragen",
+    "enterPin": "Bitte PIN eingeben, um an der Umfrage teilnehmen zu können:",
+    "error": "Etwas ist schief gelaufen!",
+    "quizLoading": "Umfrage lädt...",
+    "enterPin": "Geben sie Ihre PIN ein, um an der Umfrage teilnehmen zu können:",
+    "join": "Teilnehmen",
+    "voteCounted": "Deine Stimme wurde gezählt!",
+    "submit": "Absenden",
+    "waitingResult": "Warten auf das Ergebnis...",
+    "vote": "Stimme",
+
+    "pluralSuffix": "n"
+  }
+}

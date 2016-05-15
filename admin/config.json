@@ -1,0 +1,6 @@
+{
+  "server": "http://example.org:5060/admin",
+  "clientUrl": "http://example.org/quiz.html",
+  "language": "en",
+  "languageFile": "language.json"
+}

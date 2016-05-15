@@ -1,0 +1,14 @@
+{
+  "name": "RealtimePollsServer",
+  "version": "0.2.0",
+  "description": "Server implementation for the Realtime Polls project",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "author": "g0ne",
+  "license": "Apache License 2.0",
+  "dependencies": {
+    "socket.io": "^1.4.5"
+  }
+}

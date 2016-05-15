@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="de" ng-app="quizAdminApp" ng-controller="mainController">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title ng-bind="t('rtpolls')">Realtime Polls</title>
+  <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="admin.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <script src="admin.js"></script>
+</head>
+<body>
+
+  <div id="modalPrompt" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">
+            <span class="glyphicon glyphicon-alert"></span>
+            <span></span>
+          </h4>
+        </div>
+        <div class="modal-body"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">{{t("no")}}</button>
+          <button type="button" class="btn btn-danger">{{t("yes")}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalQuestion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal_label">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal_label">
+            <input class="form-control" type="text" ng-model="activeQuestion.title" placeholder="{{t('title')}}">
+          </h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+
+          <div class="row">
+            <div class="col-md-12">
+              <textarea class="form-control" rows="1" ng-model="activeQuestion.description" placeholder="{{t('description')}}"></textarea>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <form>
+                <div class="input-group" ng-repeat="option in activeQuestion.options">
+                  <span class="input-group-addon">
+                    <input type="radio" value="{{$index}}" ng-model="activeQuestion.correctOption">
+                  </span>
+                  <input type="text" class="form-control" ng-model="option.text" placeholder="{{t('option')}} #{{$index + 1}}">
+                  <span class="input-group-btn">
+                    <button class="btn btn-danger" type="button" ng-disabled="activeQuestion.options.length < 2" ng-click="activeQuestion.removeOption($index)">
+                      <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <button type="button" class="btn btn-default pull-right" ng-click="activeQuestion.addOption()">
+                <span class="glyphicon glyphicon-plus"></span> {{t("addOption")}}
+              </button>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">{{t("done")}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="login_form" class="container" ng-hide="loggedIn">
+    <div class="alert alert-danger" ng-show="error" role="alert">{{errorMessage}}</div>
+    <div class="row">
+      <div class="col-md-2 col-md-offset-5">
+        <input class="form-control" ng-model="loginUsername" type="text">
+        <input class="form-control" ng-model="loginPassword" type="password">
+        <button class="btn btn-warning btn-block" type="button" ng-disabled="!connected" ng-click="onLogin()">{{t("login")}}</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" ng-show="loggedIn">
+
+    <div class="page-header">
+      <h1>{{t("rtpolls")}}</h1>
+    </div>
+
+    <div class="panel panel-default" id="panel_stats">
+      <div class="panel-heading"><strong>{{t("statistics")}}</strong></div>
+      <ul class="list-group">
+        <li class="list-group-item">{{t("connectedClients")}} <span class="label label-primary pull-right">{{stats.connectedClients}}</span></li>
+        <li class="list-group-item">{{t("activePolls")}} <span class="label label-primary pull-right">{{stats.activePolls}}</span></li>
+      </ul>
+    </div>
+
+    <div id="poll_list">
+
+      <div class="panel panel-primary" ng-repeat="poll in polls">
+        <div class="panel-heading">
+          <button class="btn btn-square btn-remove" type="button" ng-click="removePoll(poll.id)">
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+          <strong>{{t("Poll")}} #{{poll.id}}</strong>
+
+          <a class="btn btn-square" href="https://api.qrserver.com/v1/create-qr-code/?data={{qrCodeUrl(poll)}}&size=500x500" target="_blank">
+            <span class="glyphicon glyphicon-qrcode"></span>
+          </a>
+          <a class="btn btn-square visible-xs-inline-block share" href="{{publicClientUrl}}#{{poll.id}}" target="_blank">
+            <span class="glyphicon glyphicon-share"></span>
+          </a>
+
+          <div class="panel-right hidden-xs">
+            <a href="{{publicClientUrl}}#{{poll.id}}" target="_blank">
+              {{publicClientUrl}}#{{poll.id}}
+            </a>
+          </div>
+        </div>
+
+        <div class="list-group">
+          <li class="list-group-item question {{poll.published ? 'disab' : ''}}" ng-repeat="question in poll.questions" ng-click="!poll.published && question.open()">
+            <button class="btn {{poll.activeQuestion == $index && poll.getState() == 'voting' ? 'btn-success' : 'btn-default'}} btn-square" title="{{t('voting')}}" ng-click="stopProp($event); poll.setState($index, 'voting');">
+              <span class="glyphicon glyphicon-pencil"></span>
+            </button>
+            <button class="btn {{poll.activeQuestion == $index && poll.getState() == 'evaluating' ? 'btn-success' : 'btn-default'}} btn-square" title="{{t('evaluating')}}" ng-click="stopProp($event); poll.setState($index, 'evaluating');">
+              <span class="glyphicon glyphicon-stats"></span>
+            </button>
+            <div class="list-group-item-content">
+              <span class="glyphicon glyphicon-remove-sign pointer {{poll.published ? 'disab' : ''}}" ng-click="stopProp($event); poll.removeQuestion($index)"></span> {{question.title}}
+              <span ng-show="poll.activeQuestion == $index"> ({{poll.votes}} {{tp("voteCount", poll.votes)}})</span>
+              <span class="badge">{{question.options.length}} {{tp("option", question.options.length)}}</span>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-xs-12 col-sm-6">
+                <div class="btn-group">
+                  <button ng-click="poll.setPublished(false)" type="button" class="btn {{poll.published ? 'btn-default' : 'btn-primary'}}">
+                    {{t("notPublished")}}
+                  </button>
+                  <button ng-click="poll.setPublished(true)" ng-disabled="poll.questions.length == 0" type="button" class="btn {{poll.published ? 'btn-success' : 'btn-default'}}">
+                    {{t("published")}}
+                  </button>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-6">
+                <button class="btn btn-primary pull-right" ng-click="poll.addQuestion()" ng-disabled="poll.published">
+                  <span class="glyphicon glyphicon-plus"></span> {{t("addQuestion")}}
+                </button>
+              </div>
+            </div>
+          </li>
+        </div>
+      </div>
+
+    </div>
+
+    <button class="btn btn-primary" data-toggle="modal" ng-click="addPoll()">
+      <span class="glyphicon glyphicon-plus"></span> {{t("addPoll")}}
+    </button>
+    <button class="btn btn-danger pull-right" ng-click="onLogout()">
+      <span class="glyphicon glyphicon-lock"></span> {{t("logout")}}
+    </button>
+
+
+    <div class="spacer"></div>
+
+  </div>
+
+</body>
+</html>

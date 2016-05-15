@@ -1,0 +1,93 @@
+#!/usr/bin/env node
+
+"use strict"
+
+const crypto = require("crypto");
+const fs = require("fs");
+const readline = require("readline");
+
+const fileName = "config.json";
+const defaultPort = 5060;
+
+let rl = readline.createInterface(process.stdin, process.stdout);
+rl.setPrompt(null);
+
+let config;
+let changed = false;
+try {
+  console.log("Reading config file");
+  config = JSON.parse(fs.readFileSync(fileName, { encoding: "utf8" }));
+} catch (e) {
+  console.log("Error reading from config file, using a default one");
+  config = {};
+}
+
+if (config.port == null) {
+  console.log("Setting port to default port", defaultPort);
+  changed = true;
+  config.port = defaultPort;
+}
+
+if (config.admins == null) {
+  console.log("Initializing admin table");
+  changed = true;
+  config.admins = {};
+}
+
+if (config.hashSecret == null || config.hashSecret.length == 0) {
+  console.log("Creating new hash secret");
+  changed = true;
+  let randomByteBuffer = crypto.randomBytes(32);
+  config.hashSecret = randomByteBuffer.toString("hex");
+}
+
+function writeConfig() {
+  console.log("Writing changed config file to", fileName + "\n");
+  fs.writeFileSync(fileName, JSON.stringify(config));
+}
+
+if (changed) {
+  writeConfig();
+}
+
+console.log("Current admins:");
+let adminCount = 0;
+for (let name in config.admins) {
+  console.log("-", name, config.admins[name]);
+  adminCount++;
+}
+if (adminCount == 0) {
+  console.log("None");
+}
+
+console.log("\nExit now if you don't want to create a new admin login\n");
+console.log("Enter usename for new admin:");
+
+let state = "username";
+let username, password;
+
+rl.on("line", line => {
+  switch (state) {
+    case "username":
+      username = line;
+      console.log("Enter password:");
+      state = "password";
+      break;
+
+    case "password":
+      password = line;
+      console.log("Creating hash");
+      let hmac = crypto.createHmac("sha256", config.hashSecret);
+      hmac.update(password);
+      let hash = hmac.digest("hex");
+
+      console.log("Adding admin to config file");
+      config.admins[username] = hash;
+      writeConfig();
+
+      console.log("Exit now if you don't want to create another login\n");
+      console.log("Enter usename for new admin:");
+      state = "username";
+      break;
+  }
+});

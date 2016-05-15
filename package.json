@@ -1,0 +1,21 @@
+{
+  "name": "RealtimePolls",
+  "version": "0.1.0",
+  "description": "Realtime Polls project",
+  "scripts": {
+    "test": "echo \"No tests specified\" && exit 0",
+    "grunt": "grunt"
+  },
+  "author": "g0ne",
+  "license": "Apache License 2.0",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-compress": "^1.2.0",
+    "grunt-contrib-cssmin": "^1.0.1",
+    "grunt-contrib-htmlmin": "^1.4.0",
+    "grunt-contrib-uglify": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-ts": "^5.5.0-beta.2"
+  }
+}

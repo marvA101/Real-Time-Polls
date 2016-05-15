@@ -1,0 +1,5 @@
+{
+  "server": "http://example.org:5060/client",
+  "language": "en",
+  "languageFile": "language.json"
+}

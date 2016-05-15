@@ -1,0 +1,8 @@
+*node_modules/
+*.js
+*.min.css
+*.zip
+!Gruntfile.js
+!server/createpw.js
+!server/main.js
+.tscache/

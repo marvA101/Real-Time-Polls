@@ -1,0 +1,133 @@
+
+.spacer {
+  height: 20px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.btn-square {
+  border-radius: 0;
+}
+
+.stripes {
+  width: 100%;
+  height: 8px;
+
+  background: repeating-linear-gradient(
+    -45deg,
+    #FACB02,
+    #FACB02 10px,
+    #F8F8F8 10px,
+    #F8F8F8 20px
+  );
+}
+
+#login_form > .alert, #login_form .row > div > * {
+  margin-top: 10px;
+}
+
+.page-header > h1 {
+  margin-bottom: -9px;
+}
+
+.page-header > h1 > span {
+  font-size: 56%;
+}
+
+#panel_stats {
+  margin-bottom: 50px;
+}
+
+.list-group-item .label {
+  font-size: 100%;
+}
+
+
+#poll_list .panel-heading {
+  position: relative;
+  padding: 0;
+
+  overflow: hidden;
+}
+
+.panel-heading .btn {
+  height: 36px;
+
+  color: white;
+  background-color: rgb(45, 89, 128);
+  border-left-width: 0;
+}
+
+.panel-heading > .btn-remove {
+  margin-right: 10px;
+}
+
+.panel-heading > .btn:not(.btn-remove) {
+  float: right;
+}
+
+.panel-heading .btn.share {
+  margin-right: 6px;
+}
+
+.panel-heading > .panel-right {
+  float: right;
+  height: 100%;
+  padding: 7px 15px 0 0;
+}
+
+.panel-heading > .panel-right > a:not(.btn) {
+  font-style: italic;
+  color: #e1e1e1;
+}
+
+#poll_list .panel .list-group .list-group-item.question {
+  display: flex;
+  padding: 0;
+
+  cursor: pointer;
+}
+
+#poll_list .panel .list-group .list-group-item.question.disab {
+  cursor: default;
+}
+
+#poll_list .panel .list-group .list-group-item.question button {
+  border-width: 0;
+  border-right-width: 1px;
+}
+
+#poll_list .list-group-item-content {
+  display: inline-block;
+  flex: auto;
+  padding: 10px 15px;
+}
+
+#poll_list .list-group-item-content > .glyphicon.disab {
+  display: none;
+}
+
+#poll_list .list-group-item-content .badge {
+  float: right;
+}
+
+#modalQuestion .modal-header {
+  display: flex;
+  flex-direction: row;
+}
+
+#modalQuestion .modal-header > * {
+  flex: auto;
+}
+
+#modalQuestion .modal-header > button {
+  flex: unset;
+  width: auto;
+  margin-left: 20px;
+}
+
+#modalQuestion .modal-body > .row, #modalQuestion .modal-body .input-group {
+  margin: 6px 0;
+}

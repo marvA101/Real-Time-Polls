@@ -1,0 +1,87 @@
+
+.loading-area, .login-area, .panel-area, .voting-area, .voted-area, .result-area, #alert_vote_submitted {
+  display: none;
+}
+
+.container.loading .loading-area {
+  display: block;
+}
+
+.container.login .login-area {
+  display: block;
+}
+
+.container.voting .voting-area, .container.voting .panel-area {
+  display: block;
+}
+
+.container.voted .voted-area, .container.voted .panel-area, .container.voted #alert_vote_submitted {
+  display: block;
+}
+
+.container.voted .description {
+  display: none;
+}
+
+.container.results .result-area, .container.results .panel-area {
+  display: block;
+}
+
+.spacer {
+  height: 20px;
+}
+
+.animated-glyphicon {
+  animation-name: glyphicon-anim;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes glyphicon-anim {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.list-group-item {
+  overflow: hidden;
+}
+
+.result-area .list-group-item > span {
+  position: relative;
+}
+
+.progressbar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+
+  background-color: RGBA(51, 122, 183, 1);
+  overflow: hidden;
+}
+
+.progressbar.correct {
+  background-color: #5CB85C;
+}
+
+.progressbar.incorrect {
+  background-color: #e3e3e3;
+}
+
+.result-area .list-group-item .progressbar > span {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+
+  white-space: nowrap;
+}
+
+.result-area .list-group-item .progressbar.correct > span {
+  color: white;
+}
