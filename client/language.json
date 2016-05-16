@@ -3,7 +3,7 @@
     "rtpolls": "Realtime Polls",
     "pinError": "The PIN has to be a 6 digit number",
     "error": "Something went wrong!",
-    "quizLoading": "Quiz is loading...",
+    "quizLoading": "Poll is loading...",
     "enterPin": "Enter your PIN to join a quiz:",
     "join": "Join",
     "voteCounted": "Your vote has been counted!",

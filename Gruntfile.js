@@ -37,7 +37,7 @@ module.exports = function(grunt) {
     },
 
     clean: {
-      all: ["*.zip"]
+      all: ["*.zip", "VERSION"]
     },
 
     cssmin: {
@@ -79,7 +79,7 @@ module.exports = function(grunt) {
             expand: true,
             flatten: true,
             src: ["release/client/*"],
-            dest: "/"
+            dest: "/client/"
           }
         ]
       },
@@ -93,7 +93,7 @@ module.exports = function(grunt) {
             expand: true,
             flatten: true,
             src: ["release/server/*", "!*.ts", "!node_modules"],
-            dest: "/"
+            dest: "/server/"
           }
         ]
       }
