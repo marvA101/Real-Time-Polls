@@ -43,3 +43,17 @@ This is an overview for the `admin/config.json` file, for the voting client conf
 ### Releases
 
 Check the [releases](../../releases/) tab for .zip files of both server and client (admin and voting client) that work with minimal setup (explained above).
+
+### Screenshots
+
+<a href="http://i.imgur.com/b8f6ppN.png" target="_blank">
+  <img src="http://i.imgur.com/b8f6ppN.png" width="400px" alt="Admin panel">
+</a>
+
+<a href="http://i.imgur.com/j08bbKK.png" target="_blank">
+  <img src="http://i.imgur.com/j08bbKK.png" width="400px" alt="Voting client question">
+</a>
+
+<a href="http://i.imgur.com/Fn9P2bj.png" target="_blank">
+  <img src="http://i.imgur.com/Fn9P2bj.png" width="400px" alt="Voting client results">
+</a>
