@@ -5,6 +5,14 @@
 Built with Bootstrap, Typescript and socket.IO, the frontend runs on the majority of modern browsers including mobile.  
 The backend runs on Node.js.
 
+### Features
+
+- Built with web technologies, works in almost all modern browsers
+- Voting client and admin panel both work on mobile too
+- Fast responses: socket.IO uses WebSockets or long polling for communication with the server which makes the delay almost imperceptible
+- Supports different languages
+- Supports LaTeX inside poll title, description and answer options (use like this: `\[ i \sqrt{64} \sum \pi \]` - `\[` starts and `\]` ends a LaTeX formula)
+
 ### Setup
 
 #### Server

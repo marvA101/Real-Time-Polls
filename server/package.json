@@ -2,12 +2,17 @@
   "name": "RealtimePollsServer",
   "version": "0.2.0",
   "description": "Server implementation for the Realtime Polls project",
+  "homepage": "https://github.com/g0ne/Realtime-Polls/tree/master/server",
   "main": "server.js",
   "scripts": {
     "test": "echo \"No tests specified\" && exit 0"
   },
-  "author": "g0ne",
-  "license": "Apache License 2.0",
+  "author": "g0ne (https://github.com/g0ne)",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/g0ne/Realtime-Polls/"
+  },
   "dependencies": {
     "socket.io": "^1.4.5"
   }
