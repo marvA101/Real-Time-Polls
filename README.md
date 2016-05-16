@@ -14,7 +14,7 @@ The server part needs [Node.js](https://nodejs.org/) and [npm](https://www.npmjs
 Unpack the `realtimepolls-server.zip` and navigate into the `server` folder. Then run `npm install` to install all dependencies. Next, run either `./ManageAdmins` or `ManageAdmins.bat`, depending on your operating system and create an admin user. This will automatically encrypt your password and store it inside `config.json`.  
 The `ManageAdmin` script currently does not support deleting admin account. To remove an account, edit the `config.json` file and delete the desired key and value inside the `admins` object.
 
-The default port for the server is 5060, to change that, edit the `port` value inside `config.json`.
+The default port for the server is `5060`, to change that, edit the `port` value inside `config.json`.
 
 Start the server with `node .` or `node server.js`.
 
@@ -34,4 +34,4 @@ This is an overview for the `admin/config.json` file, for the voting client conf
 
 ### Releases
 
-Check the [releases](releases/) tab for .zip files of both server and client (admin and voting client) that work with minimal setup (explained above).
+Check the [releases](../../releases/) tab for .zip files of both server and client (admin and voting client) that work with minimal setup (explained above).
