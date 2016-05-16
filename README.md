@@ -5,7 +5,7 @@
 Built with Bootstrap, Typescript and socket.IO, the frontend runs on the majority of modern browsers including mobile.  
 The backend runs on Node.js.
 
-### Features
+## Features
 
 - Built with web technologies, works in almost all modern browsers
 - Voting client and admin panel both work on mobile too
@@ -13,7 +13,7 @@ The backend runs on Node.js.
 - Supports different languages
 - Supports LaTeX inside poll title, description and answer options (use like this: `\[ i \sqrt{64} \sum \pi \]` - `\[` starts and `\]` ends a LaTeX formula)
 
-### Setup
+## Setup
 
 #### Server
 
@@ -40,11 +40,11 @@ This is an overview for the `admin/config.json` file, for the voting client conf
 | `language`     | `en`                            | Display language for the website (languages are defined inside the language.json file).                                                                    |
 | `languageFile` | `language.json`                 | Path to the language.json file, relative to the .html file.                                                                                                |
 
-### Releases
+## Releases
 
 Check the [releases](../../releases/) tab for .zip files of both server and client (admin and voting client) that work with minimal setup (explained above).
 
-### Screenshots
+## Screenshots
 
 <a href="http://i.imgur.com/b8f6ppN.png" target="_blank">
   <img src="http://i.imgur.com/b8f6ppN.png" width="400px" alt="Admin panel">

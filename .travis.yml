@@ -1,13 +1,19 @@
 language: node_js
 node_js:
   - node
-sudo: false
-before_script:
-  - npm install -g grunt
-script: grunt
 branches:
   only:
   - master
+
+sudo: false
+
+cache:
+  directories:
+    - node_modules/
+
+before_script:
+  - npm install -g grunt
+script: grunt
 before_deploy:
   - git config --global user.email "buildbot@travis-ci.org"
   - git config --global user.name "Travis CI"
@@ -15,6 +21,7 @@ before_deploy:
   - echo Version $RELEASE_VERSION
   - git tag -fa -m $RELEASE_VERSION $RELEASE_VERSION
   - git push -qf --tags https://$GITHUB_USER:$GITHUB_API_KEY@github.com/$GITHUB_USER/$GITHUB_REPO master
+
 deploy:
   skip_cleanup: true
   provider: releases
@@ -26,5 +33,6 @@ deploy:
   on:
     repo: g0ne/Realtime-Polls
     tags: false
+
 env:
   secure: "GWFcnPawaHFGl3jCxZIVfjNbuWNsBwPk75KMeb3CKkY2pjMX0ZxjED8++eO1IreVVlbxHhrvqEuQvOnQgNQTOcyEyP9bqcfu9OGuA1B84rr6gLxzciZjHtHg2cafA3ypizbAbZm85q096uyNh7V8dO6PBB61TgIIyApsMkLPh90x5vv/EXT7kMGZQPmOxI+b5JOu2/W38ErsY3kk+YeWfPJ5DJ0N2uOFpmsW/fKbhq9SjLZZebyj86UPZDj03EbFoUP3/lHtTHXaiZjSGMWeFebyln0r3TPC5f9iGB7hj7U+uWuOrwuZIUXWu5KY189g2sTPwo7M+2CUN/0Di5nPX7wO5eaYomrYsnuw5CdXuLshPLXenKzvNBClH+TMH5822nApb/JFf15x1PkjjcA7zUmYPXOq4PUP/mLI80Y/uFsmYSND2PfukD6ieqdaT+sAUPkjAMEz+K9dQhBTvP4qRZTqynRNhZcvBp8oY/MOP/xD7pwPg9yW9+l+ePuCymv62G0+0ExECWNZAQ0ECUMI8011yVlGPQDtCjYaR5hOanXfUy677soBAMbn4sWqbJIv1vCiwHan7DmdHvOEYCa685Bx0yep2AbHv1eD9A1iTZNKJJTec3E9sNPR5VR9M/drSxc6LmsGLbAzjnOSlzQM7VAmneFQ+Jc/9Av9J36ecso="
