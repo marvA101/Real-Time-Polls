@@ -67,7 +67,7 @@ namespace Server {
         let receivedHash = hmac.digest("hex");
         if (passwordHash == receivedHash) {
           if (AdminClient.adminsConnected > 0) {
-            this.errorMessage("Another admin is already connected");
+            this.errorMessage("anotherAdminConnected");
             return;
           }
 
@@ -81,7 +81,7 @@ namespace Server {
         }
       }
 
-      this.errorMessage("Wrong username or password");
+      this.errorMessage("wrongLogin");
     }
 
     public onLogout() : void {

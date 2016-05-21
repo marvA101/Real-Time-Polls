@@ -38,8 +38,8 @@ namespace Server {
         return this.id;
     }
 
-    public errorMessage(message : string) : void {
-      super.errorMessage(message);
+    public errorMessage(message : string, context : {} = {}) : void {
+      super.errorMessage(message, context);
 
       this.setInitialised(false);
     }
@@ -62,7 +62,7 @@ namespace Server {
 
     public onInit(init : ClientInitMessage) : void {
       if (typeof init.id != "string" || init.id.length != 32) {
-        this.errorMessage("Invalid user id");
+        this.errorMessage("invalidID");
         return;
       }
       this.id = init.id;
@@ -74,12 +74,12 @@ namespace Server {
         }
       });
       if (foundDuplicate) {
-        this.errorMessage("You are already connected");
+        this.errorMessage("alreadyConnected");
         return;
       }
 
       if (Poll.polls[init.pollId] == null || !Poll.polls[init.pollId].isPublished()) {
-        this.errorMessage("Poll #" + init.pollId + " does not exist");
+        this.errorMessage("pollDoesntExist", { id: init.pollId });
         return;
       }
 
@@ -104,25 +104,25 @@ namespace Server {
 
     public onVote(optionIndex : number) : void {
       if (!this.initialised) {
-        this.errorMessage("You are not entered into a poll");
+        this.errorMessage("notEnteredIntoPoll");
         return;
       }
 
       let poll : Poll = this.getPoll();
       if (poll.getActiveState() != PollState.VOTING) {
-        this.errorMessage("You can not vote at this time");
+        this.errorMessage("cantVote");
         return;
       }
 
       let activeQuestion : Question = poll.getActiveQuestion();
       if (activeQuestion == null) {
-        this.errorMessage("You can not vote at this time");
+        this.errorMessage("cantVote");
         return;
       }
 
       let result : boolean = activeQuestion.countClientVote(this.id, optionIndex);
       if (!result) {
-        this.errorMessage("Could not count your vote");
+        this.errorMessage("couldntCountVote");
         return;
       }
 

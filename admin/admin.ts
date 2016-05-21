@@ -82,11 +82,10 @@ class Quiz {
         });
       });
 
-      Quiz.socket.on("apperror", function(errorMessage) {
         Quiz.scopeApply(function() {
 
           Quiz.scope.error = true;
-          Quiz.scope.errorMessage = errorMessage;
+          Quiz.scope.errorMessage = Quiz.translator.translate("message." + errorMessage, translationContext);
           Quiz.scope.loggedIn = false;
 
         });

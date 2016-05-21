@@ -11,6 +11,14 @@
     "waitingResult": "Waiting on the result",
     "vote": "Vote",
 
+    "message.pollClosed": "The poll has been closed",
+    "message.invalidID": "Invalid user id",
+    "message.alreadyConnected": "You are already connected",
+    "message.pollDoesntExist": "Poll #{{id}} does not exist",
+    "message.notEnteredIntoPoll": "You are not entered into a poll",
+    "message.cantVote": "You can not vote at this time",
+    "message.couldntCountVote": "Could not count your vote",
+
     "pluralSuffix": "s"
   },
 
@@ -25,6 +33,9 @@
     "submit": "Absenden",
     "waitingResult": "Warten auf das Ergebnis...",
     "vote": "Stimme",
+
+    "message.pollClosed": "Die Umfrage wurde geschlossen",
+    "message.invalidID": "Ungültige Benutzerkennung",
 
     "pluralSuffix": "n"
   }

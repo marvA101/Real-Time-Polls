@@ -52,7 +52,7 @@ namespace Server {
 
     public remove() : void {
       VotingClient.forEach(function(client : VotingClient) {
-        client.errorMessage("The poll has been closed");
+        client.errorMessage("pollClosed");
       }, this.id);
       delete Poll.polls[this.id];
     }

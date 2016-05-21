@@ -26,6 +26,9 @@
     "removeQuestion": "Delete Question?",
     "removeQuestionText": "Are you sure you want to delete this question?",
 
+    "message.anotherAdminConnected": "Another admin is already connected",
+    "message.wrongLogin": "Wrong username or password",
+
     "pluralSuffix": "s"
   },
 
@@ -55,6 +58,9 @@
     "removePollText": "Sind Sie sicher, dass sie diese Umfrage entfernen möchten?",
     "removeQuestion": "Frage entfernen?",
     "removeQuestionText": "Sind Sie sicher, dass sie diese Frage entfernen möchten?",
+
+    "message.anotherAdminConnected": "Es ist bereits ein anderer Admin eingeloggt",
+    "message.wrongLogin": "Falscher Benutzername oder falsches Passwort",
 
     "pluralSuffix": "n"
   }

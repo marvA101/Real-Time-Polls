@@ -140,8 +140,8 @@ class QuizApp {
         }
       });
 
-      s.on("apperror", function(message : string) {
-        QuizApp.showError(message);
+        let translatedMessage = QuizApp.translator.translate("message." + message, translationContext);
+        QuizApp.showError(translatedMessage);
       });
 
       s.on("error", function(e) {
