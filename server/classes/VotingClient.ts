@@ -31,7 +31,7 @@ namespace Server {
       if (AdminClient.activeAdmin != null) {
         AdminClient.activeAdmin.statusMessage();
       }
-      console.log("Voting client connected");
+      Log.d("Voting client connected");
     }
 
     public getId() : string {
@@ -62,6 +62,7 @@ namespace Server {
 
     public onInit(init : ClientInitMessage) : void {
       if (typeof init.id != "string" || init.id.length != 32) {
+        Log.d("Voting client sent wrong ID " + init.id);
         this.errorMessage("invalidID");
         return;
       }
@@ -74,6 +75,7 @@ namespace Server {
         }
       });
       if (foundDuplicate) {
+        Log.d("Voting client " + init.id + " tried to connect more than once");
         this.errorMessage("alreadyConnected");
         return;
       }
@@ -83,6 +85,7 @@ namespace Server {
         return;
       }
 
+      Log.d("Voting client " + init.id + " connected");
       this.pollId = init.pollId;
       this.setInitialised(true);
 
@@ -132,13 +135,18 @@ namespace Server {
     }
 
     public onDisconnect() : void {
+      if (this.isInitialised()) {
+        Log.d("Voting client " + this.id + " disconnected");
+      } else {
+        Log.d("Voting client disconnected");
+      }
+
       VotingClient.clientsConnected--;
       this.setInitialised(false);
 
       if (AdminClient.activeAdmin != null) {
         AdminClient.activeAdmin.statusMessage();
       }
-      console.log("Voting client disconnected");
     }
 
     public reset() : void {

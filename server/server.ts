@@ -4,11 +4,53 @@
 
 namespace Server {
 
+  enum LogLevel {
+    DEBUG, INFO, WARNING, CRITICAL
+  }
+
+  export class Log {
+
+    public static level : LogLevel = LogLevel.INFO;
+
+    private static log(level : LogLevel, ...strings : string[]) : void {
+      let output = level < LogLevel.WARNING ? console.log : console.error;
+      output.apply(output, strings);
+    }
+
+    // debug
+    public static d(message : string) : void {
+      Log.log(LogLevel.DEBUG, "[DEBUG]", message);
+    }
+
+    // info
+    public static i(message : string) : void {
+      Log.log(LogLevel.INFO, "[INFO]", message);
+    }
+
+    // warning
+    public static w(message : string) : void {
+      Log.log(LogLevel.WARNING, "[WARNING]", message);
+    }
+
+    // critical
+    public static c(message : string) : void {
+      Log.log(LogLevel.CRITICAL, "[CRITICAL]", message);
+    }
+
+  }
+
   export class Server {
 
     public static init() : void {
       let fs = require("fs");
       let cryptoNode = require("crypto");
+
+      process.argv.forEach(s => {
+        if (s.toLowerCase() === "--debug") {
+          Log.level = LogLevel.DEBUG;
+          Log.i("Setting log level to debug");
+        }
+      });
 
       let config;
       try {
@@ -27,7 +69,7 @@ namespace Server {
       let ioServer = require("socket.io")(app);
 
       app.listen(config.port);
-      console.log("Server listening on port", config.port);
+      Log.i("Server listening on port " + config.port);
 
       let adminNs = ioServer.of("/admin");
       let clientNs = ioServer.of("/client");
@@ -130,7 +172,7 @@ namespace Server {
 
 
       } catch (e) {
-        console.error("ERROR in admin namespace", e);
+        Log.w("Error in admin namespace " + e);
       }
 
       try {
@@ -154,7 +196,7 @@ namespace Server {
         });
 
       } catch (e) {
-        console.error("ERROR in voting client namespace", e);
+        Log.w("Error in voting client namespace " + e);
       }
 
     }
@@ -165,7 +207,7 @@ namespace Server {
     }
 
     private static configError(message : string) : void {
-      console.error(message + "\nMake sure to run ManageAdmins before running the server for the first time");
+      Log.c(message + "\nMake sure to run ManageAdmins before running the server for the first time");
       process.exit(1);
     }
 

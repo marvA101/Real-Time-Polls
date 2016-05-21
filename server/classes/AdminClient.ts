@@ -8,12 +8,13 @@ namespace Server {
     public static activeAdmin : AdminClient = null;
 
     private loggedIn : boolean;
+    private username : string;
 
     constructor(socket : any) {
       super(socket);
       this.loggedIn = false;
 
-      console.log("Admin connected but not yet authenticated");
+      Log.d("Admin connected but not yet authenticated");
     }
 
     public statusMessage() : void {
@@ -49,7 +50,7 @@ namespace Server {
       for (let name in Poll.polls) {
         pollList.push(Poll.polls[name].toAdminJSON());
       }
-      console.log("Sending poll list to admin");
+      Log.d("Sending poll list to admin");
       this.socket.emit("pollupdate", pollList);
 
       for (let id in Poll.polls) {
@@ -58,7 +59,7 @@ namespace Server {
     }
 
     public onLogin(cryptoNode, config, credentials : AdminAuthenticationMessage) : void {
-      console.log("Admin tries to log in");
+      Log.d("Admin " + credentials.username + " tries to log in");
 
       let passwordHash = config.admins[credentials.username];
       let hmac = cryptoNode.createHmac("sha256", config.hashSecret);
@@ -72,25 +73,27 @@ namespace Server {
           }
 
           this.loggedIn = true;
+          this.username = credentials.username
           AdminClient.activeAdmin = this;
           AdminClient.adminsConnected++;
           this.statusMessage();
           this.sendPolls();
-          console.log("Admin successfully logged in");
+          Log.i("Admin " + this.username + " successfully logged in");
           return;
         }
       }
 
       this.errorMessage("wrongLogin");
+      Log.d("Admin " + credentials.username + " did not enter the correct login credentials");
     }
 
     public onLogout() : void {
+      Log.i("Admin " + AdminClient.activeAdmin.username + " logged out");
       if (this.loggedIn) {
         AdminClient.adminsConnected--;
         AdminClient.activeAdmin = null;
       }
       this.loggedIn = false;
-      console.log("Admin logged out");
     }
 
     public isLoggedIn() : boolean {
