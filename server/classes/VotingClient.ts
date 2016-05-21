@@ -38,7 +38,7 @@ namespace Server {
         return this.id;
     }
 
-    public errorMessage(message : string, context : {} = {}) : void {
+    public errorMessage(message : string, context : {[index : string] : string} = {}) : void {
       super.errorMessage(message, context);
 
       this.setInitialised(false);
@@ -79,7 +79,7 @@ namespace Server {
       }
 
       if (Poll.polls[init.pollId] == null || !Poll.polls[init.pollId].isPublished()) {
-        this.errorMessage("pollDoesntExist", { id: init.pollId });
+        this.errorMessage("pollDoesntExist", { id: init.pollId + "" });
         return;
       }
 
