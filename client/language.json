@@ -36,6 +36,11 @@
 
     "message.pollClosed": "Die Umfrage wurde geschlossen",
     "message.invalidID": "Ungültige Benutzerkennung",
+    "message.alreadyConnected": "Sie sind bereits verbunden",
+    "message.pollDoesntExist": "Umfrage #{{id}} existiert nicht",
+    "message.notEnteredIntoPoll": "Sie nehmen momentan an keiner Umfrage teil",
+    "message.cantVote": "Sie können momentan nicht abstimmen",
+    "message.couldntCountVote": "Ihre Stimme konnte nicht gezählt werden",
 
     "pluralSuffix": "n"
   }

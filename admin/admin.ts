@@ -82,6 +82,7 @@ class Quiz {
         });
       });
 
+      Quiz.socket.on("apperror", function(errorMessage, translationContext : {[index : string] : string}) {
         Quiz.scopeApply(function() {
 
           Quiz.scope.error = true;

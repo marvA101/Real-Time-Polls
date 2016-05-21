@@ -10,6 +10,7 @@ namespace Server {
       this.socket = socket;
     }
 
+    public errorMessage(message : string, translationContext : {[index : string] : string} = {}) : void {
       this.socket.emit("apperror", message, translationContext);
     }
 

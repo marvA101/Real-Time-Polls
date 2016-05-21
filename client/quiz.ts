@@ -140,6 +140,7 @@ class QuizApp {
         }
       });
 
+      s.on("apperror", function(message : string, translationContext : {[index : string] : string}) {
         let translatedMessage = QuizApp.translator.translate("message." + message, translationContext);
         QuizApp.showError(translatedMessage);
       });
