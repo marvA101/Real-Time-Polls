@@ -45,7 +45,7 @@ request.get(baseApiUrl + listReleases, (err, response, body) => {
 
     console.log("Deleting release #" + release.id + " - \"" + release.name + "\"");
     request.delete(baseApiUrl + removeRelease + release.id, (err, response, body) => {
-      if (err || resonse.statusCode != 204) {
+      if (err || response.statusCode != 204) {
         console.error("Error deleting the GitHub release");
         if (response)
           console.error("Status code:", response.statusCode);
