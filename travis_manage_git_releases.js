@@ -3,21 +3,21 @@
 const fs = require("fs");
 const request = require("request");
 
-const baseApiUrl = "https://api.github.com/";
-const gitHubKey = process.env.GITHUB_API_KEY;
 const gitHubUser = process.env.GITHUB_USER;
 const gitHubRepo = process.env.GITHUB_REPO;
+const gitHubKey = process.env.GITHUB_API_KEY;
 const version = fs.readFileSync("VERSION", {
   encoding: "utf8"
 });
 const buildNumber = +process.env.TRAVIS_BUILD_NUMBER;
 
-let listReleases = "repos/" + gitHubUser + "/" + gitHubRepo + "/releases";
-let removeRelease = "/repos/" + gitHubUser + "/" + gitHubRepo + "/releases/";
+const baseApiUrl = "https://" + gitHubUser + ":" + gitHubKey + "@api.github.com/";
+const listReleases = baseApiUrl + "repos/" + gitHubUser + "/" + gitHubRepo + "/releases";
+const removeRelease = baseApiUrl + "repos/" + gitHubUser + "/" + gitHubRepo + "/releases/";
 
 console.log("Requesting list of all GitHub Releases");
 
-request.get(baseApiUrl + listReleases, (err, response, body) => {
+request.get(listReleases, (err, response, body) => {
   if (err || response.statusCode != 200) {
     console.error("Error getting a list of all GitHub releases");
     if (response)
@@ -44,7 +44,7 @@ request.get(baseApiUrl + listReleases, (err, response, body) => {
       return;
 
     console.log("Deleting release #" + release.id + " - \"" + release.name + "\"");
-    request.delete(baseApiUrl + removeRelease + release.id, (err, response, body) => {
+    request.delete(removeRelease + release.id, (err, response, body) => {
       if (err || response.statusCode != 204) {
         console.error("Error deleting the GitHub release");
         if (response)
@@ -54,7 +54,7 @@ request.get(baseApiUrl + listReleases, (err, response, body) => {
 
       console.log("Successfully deleted release #" + release.id);
 
-    }).auth(gitHubUser, gitHubKey, true);
+    });
   });
 
-}).auth(gitHubUser, gitHubKey, true);
+});
