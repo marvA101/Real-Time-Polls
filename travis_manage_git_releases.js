@@ -18,7 +18,7 @@ let removeRelease = "/repos/" + gitHubUser + "/" + gitHubRepo + "/releases/";
 console.log("Requesting list of all GitHub Releases");
 
 request.get(baseApiUrl + listReleases, (err, response, body) => {
-  if (err || resonse.statusCode != 200) {
+  if (err || response.statusCode != 200) {
     console.error("Error getting a list of all GitHub releases");
     if (response)
       console.error("Status code:", response.statusCode);
