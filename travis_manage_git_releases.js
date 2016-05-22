@@ -15,6 +15,8 @@ const baseApiUrl = "https://" + gitHubUser + ":" + gitHubKey + "@api.github.com/
 const listReleases = baseApiUrl + "repos/" + gitHubUser + "/" + gitHubRepo + "/releases";
 const removeRelease = baseApiUrl + "repos/" + gitHubUser + "/" + gitHubRepo + "/releases/";
 
+console.log("DEBUG", listReleases.split("@")[1]);
+
 console.log("Requesting list of all GitHub Releases");
 
 request.get(listReleases, (err, response, body) => {
