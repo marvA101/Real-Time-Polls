@@ -17,7 +17,14 @@ const removeRelease = baseApiUrl + "repos/" + gitHubUser + "/" + gitHubRepo + "/
 
 console.log("Requesting list of all GitHub releases");
 
-request.get(listReleases, (err, response, body) => {
+let options = {
+  url: listReleases,
+  headers: {
+    "User-Agent": "g0ne-TravisCI"
+  }
+};
+
+request.get(options, (err, response, body) => {
   if (err || response.statusCode != 200) {
     console.error("Error getting a list of all GitHub releases");
     if (response)
@@ -45,7 +52,9 @@ request.get(listReleases, (err, response, body) => {
       return;
 
     console.log("Deleting release #" + release.id + " - \"" + release.name + "\"");
-    request.delete(removeRelease + release.id, (err, response, body) => {
+
+    options.url = removeRelease + release.id;
+    request.delete(options, (err, response, body) => {
       if (err || response.statusCode != 204) {
         console.error("Error deleting the GitHub release");
         if (response)
