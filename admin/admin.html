@@ -134,7 +134,6 @@
         </div>
 
         <div class="list-group">
-          <li class="list-group-item question {{poll.published ? 'disab' : ''}}" ng-repeat="question in poll.questions" ng-click="!poll.published && question.open()">
             <button class="btn {{poll.activeQuestion == $index && poll.getState() == 'voting' ? 'btn-success' : 'btn-default'}} btn-square" title="{{t('voting')}}" ng-click="stopProp($event); poll.setState($index, 'voting');">
               <span class="glyphicon glyphicon-pencil"></span>
             </button>
@@ -142,7 +141,6 @@
               <span class="glyphicon glyphicon-stats"></span>
             </button>
             <div class="list-group-item-content">
-              <span class="glyphicon glyphicon-remove-sign pointer {{poll.published ? 'disab' : ''}}" ng-click="stopProp($event); poll.removeQuestion($index)"></span> {{question.title}}
               <span ng-show="poll.activeQuestion == $index"> ({{poll.votes}} {{tp("voteCount", poll.votes)}})</span>
               <span class="badge">{{question.options.length}} {{tp("option", question.options.length)}}</span>
             </div>
@@ -151,10 +149,8 @@
             <div class="row">
               <div class="col-xs-12 col-sm-6">
                 <div class="btn-group">
-                  <button ng-click="poll.setPublished(false)" type="button" class="btn {{poll.published ? 'btn-default' : 'btn-primary'}}">
                     {{t("notPublished")}}
                   </button>
-                  <button ng-click="poll.setPublished(true)" ng-disabled="poll.questions.length == 0" type="button" class="btn {{poll.published ? 'btn-success' : 'btn-default'}}">
                     {{t("published")}}
                   </button>
                 </div>

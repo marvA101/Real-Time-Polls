@@ -62,16 +62,12 @@
   top: 0;
   height: 100%;
 
-  background-color: RGBA(51, 122, 183, 1);
+  background-color: #e3e3e3;
   overflow: hidden;
 }
 
 .progressbar.correct {
   background-color: #5CB85C;
-}
-
-.progressbar.incorrect {
-  background-color: #e3e3e3;
 }
 
 .result-area .list-group-item .progressbar > span {
@@ -84,4 +80,8 @@
 
 .result-area .list-group-item .progressbar.correct > span {
   color: white;
+}
+
+.badge.correct {
+  background-color: #0C8F0C;
 }

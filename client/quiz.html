@@ -30,7 +30,7 @@
 </head>
 <body ng-controller="mainController">
 
-  <div class="container {{state}}">
+  <div class="container" ng-class="state">
 
     <div class="spacer"></div>
 
@@ -62,7 +62,7 @@
 
         <div class="voting-area">
           <div class="list-group">
-            <button ng-repeat="option in question.options" ng-click="setSelected($index)" type="button" class="list-group-item {{$index == selectedOption ? 'active' : ''}}">
+            <button ng-repeat="option in question.options" ng-click="setSelected($index)" type="button" class="list-group-item" ng-class="{active: $index == selectedOption}">
               <span class="glyphicon glyphicon-chevron-right"></span> <span rq-mathjax="option.text"></span>
             </button>
           </div>
@@ -80,10 +80,10 @@
           <ul class="list-group">
             <li class="list-group-item" ng-repeat="option in question.options">
               <span rq-mathjax="option.text"></span>
-              <div class="progressbar {{question.correctOption == $index ? 'correct' : 'incorrect'}}" style="width: {{option.percent}}%;">
+              <div class="progressbar" ng-class="{correct: question.correctOption == $index}" style="width: {{option.percent}}%;">
                 <span rq-mathjax="option.text"></span>
               </div>
-              <span class="badge">{{option.votes}}</span>
+              <span class="badge" ng-class="{correct: question.correctOption == $index}">{{option.votes}}</span>
             </li>
           </ul>
 
