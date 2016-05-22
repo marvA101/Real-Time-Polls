@@ -15,13 +15,14 @@ const baseApiUrl = "https://" + gitHubUser + ":" + gitHubKey + "@api.github.com/
 const listReleases = baseApiUrl + "repos/" + gitHubUser + "/" + gitHubRepo + "/releases";
 const removeRelease = baseApiUrl + "repos/" + gitHubUser + "/" + gitHubRepo + "/releases/";
 
-console.log("Requesting list of all GitHub Releases");
+console.log("Requesting list of all GitHub releases");
 
 request.get(listReleases, (err, response, body) => {
   if (err || response.statusCode != 200) {
     console.error("Error getting a list of all GitHub releases");
     if (response)
       console.error("Status code:", response.statusCode);
+    console.error("DEBUG", err, body);
     return;
   }
 
