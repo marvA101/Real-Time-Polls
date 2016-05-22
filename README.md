@@ -1,6 +1,7 @@
 # Realtime Polls
 
-[![Build Status](https://travis-ci.org/g0ne/Realtime-Polls.svg?branch=master)](https://travis-ci.org/g0ne/Realtime-Polls)
+[![Travis Build Status](https://img.shields.io/travis/g0ne/Realtime-Polls.svg?style=flat-square)](https://travis-ci.org/g0ne/Realtime-Polls)
+[![GitHub release](https://img.shields.io/github/release/g0ne/Realtime-Polls.svg?style=flat-square)](https://github.com/g0ne/Realtime-Polls/releases)
 
 Built with Bootstrap, Typescript and socket.IO, the frontend runs on the majority of modern browsers including mobile.  
 The backend runs on Node.js.
