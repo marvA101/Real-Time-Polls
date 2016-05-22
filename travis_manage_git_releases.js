@@ -29,7 +29,6 @@ request.get(options, (err, response, body) => {
     console.error("Error getting a list of all GitHub releases");
     if (response)
       console.error("Status code:", response.statusCode);
-    console.error("DEBUG", err, body);
     return;
   }
 
@@ -42,16 +41,18 @@ request.get(options, (err, response, body) => {
     return;
   }
 
-  console.log("Got list, deleting deprecated ones");
-  console.log("#Releases:", releases.length);
+  console.log("Retrieved list, deleting deprecated ones");
+  console.log("Total #releases:", releases.length);
 
+  let deprecatedReleases = 0;
   releases.forEach(release => {
     const releaseVersion = release.tag_name.split("-")[0];
     const releaseBuildNumber = +release.tag_name.split("-")[1];
     if (releaseVersion !== version || releaseBuildNumber >= buildNumber)
       return;
 
-    console.log("Deleting release #" + release.id + " - \"" + release.name + "\"");
+      deprecatedReleases++;
+    console.log("Deleting release #" + release.id + " - \"" + release.tag_name + "\"");
 
     options.url = removeRelease + release.id;
     request.delete(options, (err, response, body) => {
@@ -66,5 +67,7 @@ request.get(options, (err, response, body) => {
 
     });
   });
+
+  console.log(deprecatedReleases + " deprecated releases detected");
 
 });
