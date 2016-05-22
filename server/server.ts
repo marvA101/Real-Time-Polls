@@ -42,9 +42,11 @@ namespace Server {
   export class Server {
 
     public static init() : void {
-      let fs = require("fs");
-      let cryptoNode = require("crypto");
+      const fs = require("fs");
+      const cryptoNode = require("crypto");
+      const readline = require("readline");
 
+      // checking command line arguments
       process.argv.forEach(s => {
         if (s.toLowerCase() === "--debug") {
           Log.level = LogLevel.DEBUG;
@@ -52,6 +54,7 @@ namespace Server {
         }
       });
 
+      // loading config file
       let config;
       try {
         config = JSON.parse(fs.readFileSync("config.json", {
@@ -64,6 +67,37 @@ namespace Server {
       if (!config.port || !config.admins || !config.hashSecret) {
         Server.configError("Invalid config file");
       }
+
+      // loading saved polls
+      const savedPollsFile = "saved_polls.json";
+      const savedPollsEncoding = {
+        encoding: "utf8"
+      };
+      Log.i("Loading saved polls, if any...");
+      try {
+        let polls : IPoll[] = JSON.parse(fs.readFileSync(savedPollsFile, savedPollsEncoding));
+        polls.forEach(p => Poll.polls[p.id] = new Poll(p));
+        Log.i("Loaded " + polls.length + " polls");
+
+      } catch (e) {
+        Log.i("Could not read or parse the " + savedPollsFile + " file");
+        Log.d("Exception thrown: " + e);
+      }
+
+      let inputReadline = readline.createInterface(process.stdin, process.stdout);
+      inputReadline.on("SIGINT", () => {
+        Log.i("Received interrupt, exiting");
+
+        Log.i("Saving polls...");
+        let polls : IPoll[] = [];
+        for (let id in Poll.polls) {
+          polls.push(Poll.polls[id].toAdminJSON());
+        }
+        fs.writeFileSync(savedPollsFile, JSON.stringify(polls), savedPollsEncoding);
+        Log.i("Polls saved to file " + savedPollsFile);
+
+        process.exit(0);
+      });
 
       let app = require("http").createServer(Server.httpHandler);
       let ioServer = require("socket.io")(app);

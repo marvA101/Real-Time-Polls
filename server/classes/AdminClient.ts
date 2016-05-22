@@ -1,5 +1,3 @@
-/// <reference path="../server.ts" />
-
 namespace Server {
 
   export class AdminClient extends Client {
@@ -88,8 +86,8 @@ namespace Server {
     }
 
     public onLogout() : void {
-      Log.i("Admin " + AdminClient.activeAdmin.username + " logged out");
       if (this.loggedIn) {
+        Log.i("Admin " + AdminClient.activeAdmin.username + " logged out");
         AdminClient.adminsConnected--;
         AdminClient.activeAdmin = null;
       }

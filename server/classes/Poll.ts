@@ -1,5 +1,3 @@
-/// <reference path="../server.ts" />
-
 namespace Server {
 
   export class Poll {
