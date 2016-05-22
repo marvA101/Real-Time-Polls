@@ -38,4 +38,4 @@ deploy:
     tags: false
 
 after_deploy:
-  - ./travis_manage_git_releases.js
+  - node travis_manage_git_releases.js
