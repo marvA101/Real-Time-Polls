@@ -18,6 +18,7 @@ before_script:
 script: grunt
 
 before_deploy:
+  - echo BEFORE DEPLOY
   - ./before_deploy.sh
   - echo TEST $DEPLOY
 
@@ -35,4 +36,5 @@ deploy:
     condition: $DEPLOY == "yes"
 
 after_deploy:
+  - echo AFTER DEPLOY
   - node travis_manage_git_releases.js
