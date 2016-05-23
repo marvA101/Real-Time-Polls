@@ -25,7 +25,7 @@ let options = {
   }
 };
 
-let errorFunc = (err, resp, body, statusCode, message) => {
+let errorFunc = (err, response, body, statusCode, message) => {
   if (err || response.statusCode != statusCode) {
     console.error(message);
     if (response)

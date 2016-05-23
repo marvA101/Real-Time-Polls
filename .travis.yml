@@ -19,7 +19,6 @@ script:
   - grunt
   - chmod +x check_deploy.sh
   - . ./check_deploy.sh
-  - echo TEST $DEPLOY
 
 before_deploy:
   - git config --global user.email "buildbot@travis-ci.org"
@@ -42,6 +41,4 @@ deploy:
     tags: false
     condition: $DEPLOY == "yes"
 
-after_deploy:
-  - echo AFTER DEPLOY
-  - node travis_manage_git_releases.js
+after_deploy: node travis_manage_git_releases.js
