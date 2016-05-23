@@ -9,11 +9,12 @@ const gitHubKey = process.env.GITHUB_API_KEY;
 const version = fs.readFileSync("VERSION", {
   encoding: "utf8"
 });
+const isPreRelease = +version.split(".")[1] & 1 == 1;
 const buildNumber = +process.env.TRAVIS_BUILD_NUMBER;
 
 const baseApiUrl = "https://" + gitHubUser + ":" + gitHubKey + "@api.github.com/";
 const listReleases = baseApiUrl + "repos/" + gitHubUser + "/" + gitHubRepo + "/releases";
-const removeRelease = baseApiUrl + "repos/" + gitHubUser + "/" + gitHubRepo + "/releases/";
+const modifyRelease = baseApiUrl + "repos/" + gitHubUser + "/" + gitHubRepo + "/releases/";
 
 console.log("Requesting list of all GitHub releases");
 
@@ -24,13 +25,19 @@ let options = {
   }
 };
 
-request.get(options, (err, response, body) => {
-  if (err || response.statusCode != 200) {
-    console.error("Error getting a list of all GitHub releases");
+let errorFunc = (err, resp, body, statusCode, message) => {
+  if (err || response.statusCode != statusCode) {
+    console.error(message);
     if (response)
       console.error("Status code:", response.statusCode);
-    return;
+    return true;
   }
+  return false;
+}
+
+request.get(options, (err, response, body) => {
+  if (errorFunc(err, response, body, 200, "Error getting a list of all GitHub releases"))
+    return;
 
   let releases;
   try {
@@ -48,20 +55,31 @@ request.get(options, (err, response, body) => {
   releases.forEach(release => {
     const releaseVersion = release.tag_name.split("-")[0];
     const releaseBuildNumber = +release.tag_name.split("-")[1];
-    if (releaseVersion !== version || releaseBuildNumber >= buildNumber)
+    options.url = modifyRelease + release.id;
+
+    if (isPreRelease && releaseVersion === version && releaseBuildNumber === buildNumber) {
+      options.form = "{\"prerelease\":true}";
+      console.log("Editing the current GitHub release to mark it a pre-release");
+      request.patch(options, (err, response, body) => {
+        console.log(body);
+        if (errorFunc(err, response, body, 200, "Error editing the GitHub release"))
+          return;
+
+        console.log("Successfully edited release #" + release.id);
+      });
+      delete options.form;
       return;
 
-      deprecatedReleases++;
+    } else if (releaseVersion !== version || releaseBuildNumber >= buildNumber) {
+      return;
+    }
+
+    deprecatedReleases++;
     console.log("Deleting release #" + release.id + " - \"" + release.tag_name + "\"");
 
-    options.url = removeRelease + release.id;
     request.delete(options, (err, response, body) => {
-      if (err || response.statusCode != 204) {
-        console.error("Error deleting the GitHub release");
-        if (response)
-          console.error("Status code:", response.statusCode);
+      if (errorFunc(err, response, body, 204, "Error deleting the GitHub release"))
         return;
-      }
 
       console.log("Successfully deleted release #" + release.id);
 

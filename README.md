@@ -45,16 +45,26 @@ This is an overview for the `admin/config.json` file, for the voting client conf
 
 Check the [releases](../../releases/) tab for .zip files of both server and client (admin and voting client) that work with minimal setup (explained above).
 
+Releases follow a naming scheme:  
+[MAJOR] **.** [MINOR] **.** [DEV]
+
+MAJOR: Changes in the major part of the version denote versions which differ significantly from the previous.  
+MINOR: Even numbers mean, that the version is ready to be released. Odd numbers mark a pre-release.  
+DEV: Odd numbers signal that the current version should not appear in the GitHub releases
+
 ## Screenshots
 
+Admin Panel  
 <a href="http://i.imgur.com/b8f6ppN.png" target="_blank">
   <img src="http://i.imgur.com/b8f6ppN.png" width="400px" alt="Admin panel">
 </a>
 
+Voting Client selecting an answer option  
 <a href="http://i.imgur.com/j08bbKK.png" target="_blank">
   <img src="http://i.imgur.com/j08bbKK.png" width="400px" alt="Voting client question">
 </a>
 
+Voting client looking at the results  
 <a href="http://i.imgur.com/Fn9P2bj.png" target="_blank">
   <img src="http://i.imgur.com/Fn9P2bj.png" width="400px" alt="Voting client results">
 </a>
