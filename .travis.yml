@@ -18,7 +18,7 @@ before_script:
 script:
   - grunt
   - chmod +x check_deploy.sh
-  - ./check_deploy.sh
+  - . ./check_deploy.sh
   - echo TEST $DEPLOY
 
 before_deploy:
