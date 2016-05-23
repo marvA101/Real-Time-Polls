@@ -18,7 +18,7 @@ before_script:
 script:
   - grunt
   - echo after grunt script
-  - ./before_deploy.sh
+  - ./check_deploy.sh
   - echo TEST $DEPLOY
 
 before_deploy:
