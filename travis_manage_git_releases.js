@@ -61,7 +61,6 @@ request.get(options, (err, response, body) => {
       options.form = "{\"prerelease\":true}";
       console.log("Editing the current GitHub release to mark it a pre-release");
       request.patch(options, (err, response, body) => {
-        console.log(body);
         if (errorFunc(err, response, body, 200, "Error editing the GitHub release"))
           return;
 
